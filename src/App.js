@@ -7,6 +7,7 @@ function App() {
 
   const[movies, setMovies] = useState([]);
   const[isLoading, setIsLoading] = useState(false);
+  const[error, setError] = useState(null);
 
   const fetchMoviesHandler = () => {
     setIsLoading(true);
@@ -22,12 +23,15 @@ function App() {
 
       setMovies(updatedMovies);
       setIsLoading(false);
-    })
+    }).catch((error) => {
+      setError("Something Went Wrong");
+  })
   }
 
   let content = <p>No Movies Found.</p>
   if(movies.length > 0) content= <MoviesList movies={movies} />
   if(isLoading) content=<p>Loading...</p>
+  if(error) content = <p>{error}</p>
 
   return (
     <React.Fragment>
